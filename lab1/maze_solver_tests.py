@@ -30,3 +30,18 @@ def simple_maze_test():
 
     for x, y, expected in results:
         assert solver.query(x, y) == expected
+
+
+def large_maze_test():
+    size = 1_000_000
+    maze = {
+        (x, y)
+        for x in range(0, size)
+        for y in range(0, size)
+        if x in {0, 2} or y in {0, 2}
+    }
+    solver = MazeSolver(maze, size, size)
+    solver.preprocess()
+
+    assert solver.query(1, 3) and solver.query(3, 1)
+    assert not (solver.query(1, 1) or solver.query(2, 2))
